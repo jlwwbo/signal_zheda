@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI模型体验官 🤖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .header h1 {
+            font-size: 3em;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            color: #666;
+            position: relative;
+            z-index: 1;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: 3px solid transparent;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            border-color: #ff6b6b;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            margin-right: 15px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .card-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #333;
+            line-height: 1.3;
+        }
+
+        .card-subtitle {
+            font-size: 0.9em;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .card-content {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: #f0f0f0;
+            color: #666;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .hot-tag {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .new-tag {
+            background: linear-gradient(45deg, #4ecdc4, #6ee6d8);
+            color: white;
+        }
+
+        .pro-tag {
+            background: linear-gradient(45deg, #45b7d1, #96ceb4);
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            color: white;
+        }
+
+        .speech-bubble {
+            position: relative;
+            background: #fff;
+            border-radius: 20px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 30px;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-top-color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+
+        .mascot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            animation: float 3s ease-in-out infinite;
+            z-index: 1000;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .mascot:hover {
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AI模型体验官</h1>
+            <p>大学生专属AI模型测评 · 最新最热最好玩</p>
+        </div>
+
+        <div class="grid">
+            <div class="card" onclick="showDetails(this)">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #ff6b6b, #ff8e8e);">🚀</div>
+                    <div>
+                        <div class="card-title">模型尝鲜大冒险</div>
+                        <div class="card-subtitle">o3pro、豆包1.6深度体验</div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    最新AI模型抢先体验！o3pro的推理能力到底有多强？豆包1.6在日常对话中表现如何？跟着我们一起探索AI的边界！
+                </div>
+                <div class="card-tags">
+                    <span class="tag hot-tag">🔥 超热门</span>
+                    <span class="tag">评测</span>
+                    <span class="tag">对比</span>
+                </div>
+            </div>
+
+            <div class="card" onclick="showDetails(this)">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #4ecdc4, #6ee6d8);">🇨🇳</div>
+                    <div>
+                        <div class="card-title">国产开源之光</div>
+                        <div class="card-subtitle">Qwen3全系列深度对比</div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    又一次刷新认知！Qwen3全系列横向对比，看看哪个版本最适合你的需求。从轻量级到旗舰版，总有一款打动你！
+                </div>
+                <div class="card-tags">
+                    <span class="tag new-tag">✨ 全新</span>
+                    <span class="tag">开源</span>
+                    <span class="tag">对比测试</span>
+                </div>
+            </div>
+
+            <div class="card" onclick="showDetails(this)">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #45b7d1, #96ceb4);">👑</div>
+                    <div>
+                        <div class="card-title">代码之神降临</div>
+                        <div class="card-subtitle">Claude 4系列全面体验</div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    掌管代码的神级AI！Claude 4系列在编程、写作、分析等各方面的表现如何？让我们一起见证AI助手的新高度！
+                </div>
+                <div class="card-tags">
+                    <span class="tag pro-tag">💎 专业级</span>
+                    <span class="tag">编程</span>
+                    <span class="tag">全能</span>
+                </div>
+            </div>
+
+            <div class="card" onclick="showDetails(this)">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #a8e6cf, #7fcdcd);">🎨</div>
+                    <div>
+                        <div class="card-title">万能乙方？</div>
+                        <div class="card-subtitle">OpenAI o4图片生成体验</div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    设计师的新对手还是新伙伴？OpenAI o4的图片生成能力深度测试，看看AI能否胜任你的创意需求！
+                </div>
+                <div class="card-tags">
+                    <span class="tag">🎭 创意</span>
+                    <span class="tag">图像生成</span>
+                    <span class="tag">实用</span>
+                </div>
+            </div>
+
+            <div class="card" onclick="showDetails(this)">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #ffd93d, #ff6b6b);">🌟</div>
+                    <div>
+                        <div class="card-title">人人都用得起</div>
+                        <div class="card-subtitle">Qwen 2.5 omni 7B体验</div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    多模态大模型不再是奢侈品！Qwen 2.5 omni 7B让每个大学生都能体验AI的魅力，性价比之王当之无愧！
+                </div>
+                <div class="card-tags">
+                    <span class="tag">💰 超值</span>
+                    <span class="tag">多模态</span>
+                    <span class="tag">学生友好</span>
+                </div>
+            </div>
+
+            <div class="card" onclick="showDetails(this)">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #ff8a80, #ff5722);">🕵️</div>
+                    <div>
+                        <div class="card-title">大型诈骗现场？</div>
+                        <div class="card-subtitle">Llama 4真实体验</div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    Meta又在画大饼？Llama 4的真实体验来了！到底是革命性突破还是营销噱头，让数据说话！
+                </div>
+                <div class="card-tags">
+                    <span class="tag">🔍 揭秘</span>
+                    <span class="tag">真实测评</span>
+                    <span class="tag">争议</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🎓 专为大学生打造的AI体验分享平台</p>
+            <p>让每一次AI体验都成为学习的机会</p>
+        </div>
+    </div>
+
+    <div class="mascot" onclick="showTip()">
+        🤖
+    </div>
+
+    <script>
+        function showDetails(card) {
+            const title = card.querySelector('.card-title').textContent;
+            const content = card.querySelector('.card-content').textContent;
+            
+            // 添加点击动画
+            card.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                card.style.transform = '';
+            }, 150);
+            
+            // 创建模拟的详情显示
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2000;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            `;
+            
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: white;
+                padding: 30px;
+                border-radius: 20px;
+                max-width: 500px;
+                width: 90%;
+                text-align: center;
+                transform: scale(0.7);
+                transition: transform 0.3s ease;
+            `;
+            
+            modalContent.innerHTML = `
+                <h2 style="color: #333; margin-bottom: 15px;">${title}</h2>
+                <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">${content}</p>
+                <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <p>📚 详细评测内容即将上线...</p>
+                    <p>🎯 关注我们获取最新更新！</p>
+                </div>
+                <button onclick="this.parentElement.parentElement.remove()" style="
+                    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+                    color: white;
+                    border: none;
+                    padding: 12px 24px;
+                    border-radius: 25px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    font-weight: 500;
+                ">关闭</button>
+            `;
+            
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+            
+            // 动画效果
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                modalContent.style.transform = 'scale(1)';
+            }, 10);
+        }
+
+        function showTip() {
+            const tips = [
+                "💡 点击卡片查看详细内容哦！",
+                "🎯 每个模型都有独特的优势！",
+                "📱 移动端体验也很棒！",
+                "🚀 AI技术发展真是太快了！",
+                "🎓 学习AI，从体验开始！"
+            ];
+            
+            const randomTip = tips[Math.floor(Math.random() * tips.length)];
+            
+            const tipBubble = document.createElement('div');
+            tipBubble.className = 'speech-bubble';
+            tipBubble.textContent = randomTip;
+            tipBubble.style.cssText = `
+                position: fixed;
+                bottom: 120px;
+                right: 20px;
+                max-width: 200px;
+                z-index: 1001;
+                animation: fadeInUp 0.5s ease;
+            `;
+            
+            document.body.appendChild(tipBubble);
+            
+            setTimeout(() => {
+                tipBubble.remove();
+            }, 3000);
+        }
+
+        // 添加CSS动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // 随机显示欢迎提示
+        setTimeout(() => {
+            showTip();
+        }, 2000);
+    </script>
+</body>
+</html>
