@@ -20,7 +20,7 @@
         
         body {
             font-family: 'Noto Sans SC', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #3d83f4 0%, #ffffff 100%);
             min-height: 100vh;
             overflow-x: hidden;
         }
@@ -59,8 +59,8 @@
             font-weight: 900;
             color: #fff;
             text-shadow: 
-                4px 4px 0px #ff6b6b,
-                8px 8px 0px #4ecdc4,
+                4px 4px 0px #3d83f4,
+                8px 8px 0px #ffffff,
                 12px 12px 20px rgba(0,0,0,0.3);
             margin-bottom: 20px;
             transform: rotate(-2deg);
@@ -94,9 +94,9 @@
             cursor: pointer;
             transform: rotate(0deg);
             transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            border: 4px solid #333;
+            border: 4px solid #fff;
             box-shadow: 
-                8px 8px 0px #333,
+                8px 8px 0px #fff,
                 8px 8px 20px rgba(0,0,0,0.2);
             overflow: hidden;
         }
@@ -119,33 +119,33 @@
         .nav-card:hover {
             transform: rotate(-2deg) scale(1.05);
             box-shadow: 
-                12px 12px 0px #333,
+                12px 12px 0px #fff,
                 12px 12px 30px rgba(0,0,0,0.3);
         }
         
-        .nav-card:nth-child(1) { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
-        .nav-card:nth-child(2) { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
-        .nav-card:nth-child(3) { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
-        .nav-card:nth-child(4) { background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%); }
+        .nav-card:nth-child(1) { background: linear-gradient(135deg, #3d83f4 0%, #3d83f4 100%); }
+        .nav-card:nth-child(2) { background: linear-gradient(135deg, #3d83f4 0%, #3d83f4 100%); }
+        .nav-card:nth-child(3) { background: linear-gradient(135deg, #3d83f4 0%, #3d83f4 100%); }
+        .nav-card:nth-child(4) { background: linear-gradient(135deg, #3d83f4 0%, #3d83f4 100%); }
         
         .card-icon {
             font-size: 4rem;
             margin-bottom: 20px;
             display: block;
-            filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.3));
+            filter: drop-shadow(3px 3px 0px rgba(255, 255, 255, 0.3));
         }
         
         .card-title {
             font-size: 1.8rem;
             font-weight: 700;
-            color: #333;
+            color: #fff;
             margin-bottom: 15px;
             text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
         }
         
         .card-desc {
             font-size: 1rem;
-            color: #666;
+            color: #fff;
             line-height: 1.6;
         }
         
@@ -226,13 +226,13 @@
         .speech-bubble {
             position: relative;
             background: #fff;
-            border: 3px solid #333;
+            border: 3px solid rgb(255, 253, 253);
             border-radius: 20px;
             padding: 15px 20px;
             margin: 20px auto;
             max-width: 300px;
             text-align: center;
-            box-shadow: 5px 5px 0px #333;
+            box-shadow: 5px 5px 0px rgb(255, 255, 255);
         }
         
         .speech-bubble::after {
@@ -257,7 +257,7 @@
             width: 0;
             height: 0;
             border: 23px solid transparent;
-            border-top-color: #333;
+            border-top-color: rgb(255, 255, 255);
             border-bottom: none;
         }
     </style>
@@ -281,25 +281,25 @@
         
         <nav class="nav-grid">
             <a href="introduction.html" class="nav-card">
-                <span class="card-icon">📚</span>
+                <span class="card-icon">1. </span>
                 <h2 class="card-title">信号体系介绍</h2>
                 <p class="card-desc">了解奇绩信号体系的核心理念和运作方式，开启你的认知升级之旅</p>
             </a>
             
             <a href="tiyanguan.html" class="nav-card">
-                <span class="card-icon">🤖</span>
+                <span class="card-icon">2. </span>
                 <h2 class="card-title">模型体验官</h2>
                 <p class="card-desc">成为AI模型的体验官，与最前沿的人工智能技术亲密接触</p>
             </a>
             
             <a href="discussion.html" class="nav-card">
-                <span class="card-icon">💬</span>
+                <span class="card-icon">3. </span>
                 <h2 class="card-title">讨论区</h2>
                 <p class="card-desc">与志同道合的伙伴们分享想法，碰撞思维的火花</p>
             </a>
             
             <a href="https://miracleplus.feishu.cn/share/base/form/shrcnWBNun5JXLvwN05e3I9OE8e" class="nav-card">
-                <span class="card-icon">📝</span>
+                <span class="card-icon">4. </span>
                 <h2 class="card-title">问卷</h2>
                 <p class="card-desc">参与各类有趣的调研问卷，让你的声音被听见</p>
             </a>
