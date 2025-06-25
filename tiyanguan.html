@@ -3,9 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI模型体验官 🤖</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>AI模型体验官</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* 全局变量和重置 */
+        :root {
+            --primary-blue: #3d83f4;
+            --light-gray: #f9f9f9;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #333333;
+            --text-color: #4a4a4a;
+            --border-color: #f0f0f0;
+            --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            --header-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            --accent-gradient: linear-gradient(135deg, #3d83f4, #5a9bff);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,103 +28,106 @@
         }
 
         body {
-            font-family: 'Noto Sans SC', sans-serif;
-            background: linear-gradient(135deg, #3d83f4 0%, #3d83f4 100%);
+            font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+            background-color: var(--light-gray); /* 纯净的浅灰色背景 */
+            color: var(--text-color);
             min-height: 100vh;
-            padding: 20px;
-            color: #333;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding: 0; /* 移除body padding，让container控制 */
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 960px; /* 适中宽度，聚焦内容 */
+            margin: 40px auto;
+            padding: 0 20px;
         }
 
+        /* 头部样式 */
         .header {
             text-align: center;
-            margin-bottom: 40px;
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 60px;
+            padding: 40px 0;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: var(--header-shadow);
             position: relative;
             overflow: hidden;
         }
 
-        .header::before {
+        .header::before, .header::after { /* subtle background elements */
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: shimmer 3s infinite;
+            width: 150px;
+            height: 150px;
+            background: rgba(61, 131, 244, 0.05);
+            border-radius: 50%;
+            z-index: 0;
+            filter: blur(50px);
+        }
+        
+        .header::before {
+            top: -50px;
+            left: -50px;
         }
 
-        @keyframes shimmer {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .header::after {
+            bottom: -50px;
+            right: -50px;
         }
 
         .header h1 {
-            font-size: 3em;
+            font-size: 2.8rem; /* 更内敛但有力的标题 */
             font-weight: 700;
-            background: linear-gradient(45deg, #3d83f4, #3d83f4, #3d83f4, #3d83f4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--dark-gray); /* 直接使用深灰色 */
             margin-bottom: 10px;
+            letter-spacing: -0.02em;
             position: relative;
             z-index: 1;
+            background: none; /* 移除背景裁剪 */
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: unset;
+            background-clip: unset;
         }
 
         .header p {
-            font-size: 1.2em;
+            font-size: 1.1rem;
             color: #666;
+            margin-bottom: 0;
+            font-weight: 400;
             position: relative;
             z-index: 1;
         }
 
+        /* 卡片网格 */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
         }
 
         .card {
             background: white;
-            border-radius: 20px;
+            border-radius: 12px; /* 统一圆角 */
             padding: 25px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
+            box-shadow: var(--card-shadow); /* 统一阴影 */
+            transition: all 0.2s ease-in-out; /* 更平滑的过渡 */
             position: relative;
             overflow: hidden;
             cursor: pointer;
-            border: 3px solid transparent;
+            border: 1px solid var(--border-color); /* 柔和边框 */
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #3d83f4, #3d83f4, #3d83f4, #3d83f4);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
+        .card::before { /* 移除顶部彩色渐变条 */
+            content: none;
         }
 
         .card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-            border-color: #3d83f4;
-        }
-
-        .card:hover::before {
-            transform: scaleX(1);
+            transform: translateY(-5px); /* 向上轻微浮动 */
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* 更明显的阴影 */
+            border-color: var(--primary-blue); /* hover时边框变为主题色 */
         }
 
         .card-header {
@@ -119,34 +137,38 @@
         }
 
         .card-icon {
-            width: 50px;
-            height: 50px;
+            width: 48px; /* 统一图标尺寸 */
+            height: 48px;
             border-radius: 50%;
+            background: var(--primary-blue); /* 统一图标背景色 */
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5em;
+            font-size: 1.4em;
             margin-right: 15px;
             color: white;
-            font-weight: bold;
+            font-weight: 500; /* 调整字重 */
+            flex-shrink: 0;
         }
 
         .card-title {
-            font-size: 1.3em;
+            font-size: 1.4rem; /* 调整标题大小 */
             font-weight: 600;
-            color: #333;
-            line-height: 1.3;
+            color: var(--dark-gray);
+            line-height: 1.4;
+            letter-spacing: -0.01em;
         }
 
         .card-subtitle {
-            font-size: 0.9em;
+            font-size: 0.95rem; /* 调整副标题大小 */
             color: #888;
             margin-top: 5px;
         }
 
         .card-content {
-            color: #666;
-            line-height: 1.6;
+            color: var(--text-color);
+            line-height: 1.7;
+            font-size: 0.95rem; /* 调整内容字体大小 */
             margin-bottom: 15px;
         }
 
@@ -158,109 +180,71 @@
 
         .tag {
             background: #f0f0f0;
-            color: #666;
-            padding: 5px 12px;
-            border-radius: 15px;
+            color: var(--text-color);
+            padding: 6px 14px; /* 调整内边距 */
+            border-radius: 18px; /* 更圆润的标签 */
             font-size: 0.8em;
             font-weight: 500;
+            transition: background 0.2s ease;
         }
 
-        .hot-tag {
-            background: linear-gradient(45deg, #3d83f4, #3d83f4);
-            color: white;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .new-tag {
-            background: linear-gradient(45deg, #3d83f4, #3d83f4);
-            color: white;
-        }
-
-        .pro-tag {
-            background: linear-gradient(45deg, #3d83f4, #3d83f4);
-            color: white;
+        /* 移除所有特殊标签的渐变和动画，统一为普通标签样式 */
+        .hot-tag, .new-tag, .pro-tag {
+            background: #e6f0ff; /* 柔和的浅蓝色背景 */
+            color: var(--primary-blue); /* 强调色文字 */
+            animation: none; /* 移除动画 */
         }
 
         .footer {
             text-align: center;
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            color: white;
+            background: none; /* 移除背景 */
+            padding: 30px 20px;
+            border-radius: 0; /* 移除圆角 */
+            backdrop-filter: none; /* 移除模糊 */
+            color: #888; /* 柔和的灰色 */
+            font-size: 0.9rem;
         }
 
-        .speech-bubble {
-            position: relative;
-            background: #fff;
-            border-radius: 20px;
-            padding: 15px;
-            margin: 10px 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        /* 移除 speech-bubble 和 mascot 及其相关动画 */
+        .speech-bubble, .mascot {
+            display: none;
         }
 
-        .speech-bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 30px;
-            width: 0;
-            height: 0;
-            border: 10px solid transparent;
-            border-top-color: #fff;
+        /* 动画相关的CSS都被移除或设置为 none */
+        @keyframes none { /* 定义一个空的动画规则来禁用它们 */
+            from { opacity: 1; }
+            to { opacity: 1; }
+        }
+        .header::before, .header h1, .card, .tag.hot-tag, .mascot {
+            animation: none !important;
         }
 
         @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                padding: 0 15px;
+            }
             .grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
             }
-            
             .header h1 {
-                font-size: 2em;
+                font-size: 2.2rem;
             }
-            
+            .header p {
+                font-size: 1rem;
+            }
             .card {
                 padding: 20px;
             }
-        }
-
-        .mascot {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #3d83f4, #3d83f4);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2em;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            animation: float 3s ease-in-out infinite;
-            z-index: 1000;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .mascot:hover {
-            animation: bounce 0.5s ease;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            .card-title {
+                font-size: 1.25rem;
+            }
+            .card-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 1.3em;
+            }
         }
     </style>
 </head>
@@ -274,7 +258,7 @@
         <div class="grid">
             <div class="card" onclick="window.open('https://miracleplus.feishu.cn/docx/RPJIdpNvOoBqHHxgpadcbxJ1nRg', '_blank')">
                 <div class="card-header">
-                    <div class="card-icon" style="background: linear-gradient(135deg, #3d83f4, #3d83f4);">🚀</div>
+                    <div class="card-icon">🚀</div>
                     <div>
                         <div class="card-title">模型尝鲜大冒险</div>
                         <div class="card-subtitle">o3pro、豆包1.6深度体验</div>
@@ -284,15 +268,14 @@
                     最新AI模型抢先体验！o3pro的推理能力到底有多强？豆包1.6在日常对话中表现如何？跟着我们一起探索AI的边界！
                 </div>
                 <div class="card-tags">
-                    <span class="tag hot-tag">🔥 超热门</span>
-                    <span class="tag">评测</span>
-                    <span class="tag">对比</span>
+                    <span class="tag hot-tag">热门评测</span>
+                    <span class="tag">模型对比</span>
                 </div>
             </div>
 
             <div class="card" onclick="window.open('https://miracleplus.feishu.cn/docx/U2FBdAaVfoYMBSxardAc3G7tnEe', '_blank')">
                 <div class="card-header">
-                    <div class="card-icon" style="background: linear-gradient(135deg, #3d83f4, #3d83f4);">🇨🇳</div>
+                    <div class="card-icon">🇨🇳</div>
                     <div>
                         <div class="card-title">国产开源之光</div>
                         <div class="card-subtitle">Qwen3全系列深度对比</div>
@@ -302,51 +285,48 @@
                     又一次刷新认知！Qwen3全系列横向对比，看看哪个版本最适合你的需求。从轻量级到旗舰版，总有一款打动你！
                 </div>
                 <div class="card-tags">
-                    <span class="tag new-tag">✨ 全新</span>
-                    <span class="tag">开源</span>
-                    <span class="tag">对比测试</span>
+                    <span class="tag new-tag">全新发布</span>
+                    <span class="tag">开源模型</span>
                 </div>
             </div>
 
             <div class="card" onclick="window.open('https://miracleplus.feishu.cn/docx/HWLTdbc9moTjMdxofvccpd0Hn5c', '_blank')">
                 <div class="card-header">
-                    <div class="card-icon" style="background: linear-gradient(135deg, #3d83f4, #3d83f4);">👑</div>
+                    <div class="card-icon">👑</div>
                     <div>
                         <div class="card-title">代码之神降临</div>
-                        <div class="card-subtitle">Claude 4系列全面体验</div>
+                        <div class="card-subtitle">来自Anthropic的Claude 4系列全面体验</div>
                     </div>
                 </div>
                 <div class="card-content">
-                    掌管代码的神级AI！Claude 4系列在编程、写作、分析等各方面的表现如何？让我们一起见证AI助手的新高度！
+                    掌管代码的神级AI！来自 **Anthropic** 的 Claude 4系列在编程、写作、分析等各方面的表现如何？让我们一起见证AI助手的新高度！
                 </div>
                 <div class="card-tags">
-                    <span class="tag pro-tag">💎 专业级</span>
-                    <span class="tag">编程</span>
-                    <span class="tag">全能</span>
+                    <span class="tag pro-tag">专业编程</span>
+                    <span class="tag">全能助手</span>
                 </div>
             </div>
 
             <div class="card" onclick="window.open('https://miracleplus.feishu.cn/docx/KKXzdf5wRoO3Y2xUwG4cpp9lnBh', '_blank')">
                 <div class="card-header">
-                    <div class="card-icon" style="background: linear-gradient(135deg, #3d83f4, #3d83f4);">🎨</div>
+                    <div class="card-icon">🎨</div>
                     <div>
                         <div class="card-title">万能乙方？</div>
-                        <div class="card-subtitle">OpenAI o4图片生成体验</div>
+                        <div class="card-subtitle">来自OpenAI的o4图片生成体验</div>
                     </div>
                 </div>
                 <div class="card-content">
-                    设计师的新对手还是新伙伴？OpenAI o4的图片生成能力深度测试，看看AI能否胜任你的创意需求！
+                    设计师的新对手还是新伙伴？来自 **OpenAI** 的 o4的图片生成能力深度测试，看看AI能否胜任你的创意需求！
                 </div>
                 <div class="card-tags">
-                    <span class="tag">🎭 创意</span>
-                    <span class="tag">图像生成</span>
-                    <span class="tag">实用</span>
+                    <span class="tag">创意图像</span>
+                    <span class="tag">实用工具</span>
                 </div>
             </div>
 
             <div class="card" onclick="window.open('https://miracleplus.feishu.cn/docx/X76PdHtiwo2xSaxEfbMcOrAtnwc', '_blank')">
                 <div class="card-header">
-                    <div class="card-icon" style="background: linear-gradient(135deg, #3d83f4, #3d83f4);">🌟</div>
+                    <div class="card-icon">🌟</div>
                     <div>
                         <div class="card-title">人人都用得起</div>
                         <div class="card-subtitle">Qwen 2.5 omni 7B体验</div>
@@ -356,27 +336,25 @@
                     多模态大模型不再是奢侈品！Qwen 2.5 omni 7B让每个大学生都能体验AI的魅力，性价比之王当之无愧！
                 </div>
                 <div class="card-tags">
-                    <span class="tag">💰 超值</span>
+                    <span class="tag">超值推荐</span>
                     <span class="tag">多模态</span>
-                    <span class="tag">学生友好</span>
                 </div>
             </div>
 
             <div class="card" onclick="window.open('https://miracleplus.feishu.cn/docx/EZ32dpKTaoxbVnxan9WcxJvsnob', '_blank')">
                 <div class="card-header">
-                    <div class="card-icon" style="background: linear-gradient(135deg, #3d83f4, #3d83f4);">🕵️</div>
+                    <div class="card-icon">🕵️</div>
                     <div>
                         <div class="card-title">大型诈骗现场？</div>
-                        <div class="card-subtitle">Llama 4真实体验</div>
+                        <div class="card-subtitle">来自Meta的Llama 4真实体验</div>
                     </div>
                 </div>
                 <div class="card-content">
-                    Meta又在画大饼？Llama 4的真实体验来了！到底是革命性突破还是营销噱头，让数据说话！
+                    Meta又在画大饼？来自 **Meta** 的 Llama 4的真实体验来了！到底是革命性突破还是营销噱头，让数据说话！
                 </div>
                 <div class="card-tags">
-                    <span class="tag">🔍 揭秘</span>
-                    <span class="tag">真实测评</span>
-                    <span class="tag">争议</span>
+                    <span class="tag">独家揭秘</span>
+                    <span class="tag">真实评测</span>
                 </div>
             </div>
         </div>
@@ -387,129 +365,14 @@
         </div>
     </div>
 
-    <div class="mascot" onclick="showTip()">
-        🤖
-    </div>
-
     <script>
-        function showDetails(card) {
-            const title = card.querySelector('.card-title').textContent;
-            const content = card.querySelector('.card-content').textContent;
-            
-            // 添加点击动画
-            card.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                card.style.transform = '';
-            }, 150);
-            
-            // 创建模拟的详情显示
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.8);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 2000;
-                opacity: 0;
-                transition: opacity 0.3s ease;
-            `;
-            
-            const modalContent = document.createElement('div');
-            modalContent.style.cssText = `
-                background: white;
-                padding: 30px;
-                border-radius: 20px;
-                max-width: 500px;
-                width: 90%;
-                text-align: center;
-                transform: scale(0.7);
-                transition: transform 0.3s ease;
-            `;
-            
-            modalContent.innerHTML = `
-                <h2 style="color: #333; margin-bottom: 15px;">${title}</h2>
-                <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">${content}</p>
-                <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-                    <p>📚 详细评测内容即将上线...</p>
-                    <p>🎯 关注我们获取最新更新！</p>
-                </div>
-                <button onclick="this.parentElement.parentElement.remove()" style="
-                    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
-                    color: white;
-                    border: none;
-                    padding: 12px 24px;
-                    border-radius: 25px;
-                    font-size: 16px;
-                    cursor: pointer;
-                    font-weight: 500;
-                ">关闭</button>
-            `;
-            
-            modal.appendChild(modalContent);
-            document.body.appendChild(modal);
-            
-            // 动画效果
-            setTimeout(() => {
-                modal.style.opacity = '1';
-                modalContent.style.transform = 'scale(1)';
-            }, 10);
-        }
-
-        function showTip() {
-            const tips = [
-                "💡 点击卡片查看详细内容哦！",
-                "🎯 每个模型都有独特的优势！",
-                "📱 移动端体验也很棒！",
-                "🚀 AI技术发展真是太快了！",
-                "🎓 学习AI，从体验开始！"
-            ];
-            
-            const randomTip = tips[Math.floor(Math.random() * tips.length)];
-            
-            const tipBubble = document.createElement('div');
-            tipBubble.className = 'speech-bubble';
-            tipBubble.textContent = randomTip;
-            tipBubble.style.cssText = `
-                position: fixed;
-                bottom: 120px;
-                right: 20px;
-                max-width: 200px;
-                z-index: 1001;
-                animation: fadeInUp 0.5s ease;
-            `;
-            
-            document.body.appendChild(tipBubble);
-            
-            setTimeout(() => {
-                tipBubble.remove();
-            }, 3000);
-        }
-
-        // 添加CSS动画
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeInUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // 随机显示欢迎提示
-        setTimeout(() => {
-            showTip();
-        }, 2000);
+        // 确保页面加载时没有额外的动画和提示
+        document.addEventListener('DOMContentLoaded', function() {
+            // 移除所有与动画相关的JS（如果有）
+        });
+        
+        // 移除 showDetails 和 showTip 函数，因为它们引入了不符合风格的弹窗和气泡
+        // 卡片的点击事件直接通过 onclick="window.open(...)" 处理，无需额外JS
     </script>
 </body>
 </html>
