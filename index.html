@@ -9,22 +9,22 @@
             text-decoration: none;
             color: inherit;
         }
-        
+
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Noto Sans SC', sans-serif;
             background: linear-gradient(135deg, #3d83f4 0%, #ffffff 100%);
             min-height: 100vh;
             overflow-x: hidden;
         }
-        
+
         .comic-bg {
             position: fixed;
             top: 0;
@@ -39,7 +39,7 @@
             pointer-events: none;
             z-index: 0;
         }
-        
+
         .container {
             position: relative;
             z-index: 1;
@@ -47,13 +47,13 @@
             margin: 0 auto;
             padding: 20px;
         }
-        
+
         .header {
             text-align: center;
             margin-bottom: 50px;
             animation: bounceIn 1s ease-out;
         }
-        
+
         .main-title {
             font-size: 4rem;
             font-weight: 900;
@@ -66,7 +66,7 @@
             transform: rotate(-2deg);
             animation: wobble 2s ease-in-out infinite;
         }
-        
+
         .subtitle {
             font-size: 1.5rem;
             color: #fff;
@@ -77,14 +77,14 @@
             backdrop-filter: blur(10px);
             border: 2px solid rgba(255,255,255,0.3);
         }
-        
+
         .nav-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
             margin-bottom: 50px;
         }
-        
+
         .nav-card {
             background: rgba(255,255,255,0.95);
             border-radius: 20px;
@@ -100,7 +100,7 @@
                 8px 8px 20px rgba(0,0,0,0.2);
             overflow: hidden;
         }
-        
+
         .nav-card::before {
             content: '';
             position: absolute;
@@ -111,30 +111,32 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
             transition: left 0.5s;
         }
-        
+
         .nav-card:hover::before {
             left: 100%;
         }
-        
+
         .nav-card:hover {
             transform: rotate(-2deg) scale(1.05);
             box-shadow: 
                 12px 12px 0px #fff,
                 12px 12px 30px rgba(0,0,0,0.3);
         }
-        
-        .nav-card:nth-child(1) { background: linear-gradient(135deg, #3d83f4 0%, #3d83f4 100%); }
-        .nav-card:nth-child(2) { background: linear-gradient(135deg, #3d83f4 0%, #3d83f4 100%); }
-        .nav-card:nth-child(3) { background: linear-gradient(135deg, #3d83f4 0%, #3d83f4 100%); }
-        .nav-card:nth-child(4) { background: linear-gradient(135deg, #3d83f4 0%, #3d83f4 100%); }
-        
+
+        .nav-card:nth-child(1),
+        .nav-card:nth-child(2),
+        .nav-card:nth-child(3),
+        .nav-card:nth-child(4) {
+            background: linear-gradient(135deg, #3d83f4 0%, #3d83f4 100%);
+        }
+
         .card-icon {
             font-size: 4rem;
             margin-bottom: 20px;
             display: block;
             filter: drop-shadow(3px 3px 0px rgba(255, 255, 255, 0.3));
         }
-        
+
         .card-title {
             font-size: 1.8rem;
             font-weight: 700;
@@ -142,13 +144,13 @@
             margin-bottom: 15px;
             text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
         }
-        
+
         .card-desc {
             font-size: 1rem;
             color: #fff;
             line-height: 1.6;
         }
-        
+
         .floating-elements {
             position: absolute;
             top: 0;
@@ -158,71 +160,96 @@
             pointer-events: none;
             z-index: -1;
         }
-        
+
         .float-shape {
             position: absolute;
             animation: float 6s ease-in-out infinite;
         }
-        
+
         .float-shape:nth-child(1) {
             top: 10%;
             left: 10%;
             animation-delay: 0s;
         }
-        
+
         .float-shape:nth-child(2) {
             top: 20%;
             right: 10%;
             animation-delay: 2s;
         }
-        
+
         .float-shape:nth-child(3) {
             bottom: 30%;
             left: 5%;
             animation-delay: 4s;
         }
-        
+
         .footer {
             text-align: center;
             padding: 40px 20px;
             color: rgba(255,255,255,0.8);
             font-size: 1.1rem;
         }
-        
+
+        .qrcode-section {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: bounceIn 1s ease-out;
+        }
+
+        .qrcode-title {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        .qrcode-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 20px;
+            box-shadow: 8px 8px 0px #fff, 8px 8px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .qrcode-img:hover {
+            transform: scale(1.1) rotate(3deg);
+        }
+
         @keyframes bounceIn {
             0% { opacity: 0; transform: scale(0.3); }
             50% { opacity: 1; transform: scale(1.05); }
             70% { transform: scale(0.9); }
             100% { opacity: 1; transform: scale(1); }
         }
-        
+
         @keyframes wobble {
             0%, 100% { transform: rotate(-2deg); }
             25% { transform: rotate(-3deg); }
             75% { transform: rotate(-1deg); }
         }
-        
+
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             33% { transform: translateY(-20px) rotate(5deg); }
             66% { transform: translateY(10px) rotate(-3deg); }
         }
-        
+
         @media (max-width: 768px) {
             .main-title {
                 font-size: 2.5rem;
             }
-            
+
             .nav-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-            
+
             .nav-card {
                 padding: 25px;
             }
         }
-        
+
         .speech-bubble {
             position: relative;
             background: #fff;
@@ -234,7 +261,7 @@
             text-align: center;
             box-shadow: 5px 5px 0px rgb(255, 255, 255);
         }
-        
+
         .speech-bubble::after {
             content: '';
             position: absolute;
@@ -247,7 +274,7 @@
             border-top-color: #fff;
             border-bottom: none;
         }
-        
+
         .speech-bubble::before {
             content: '';
             position: absolute;
@@ -269,7 +296,7 @@
         <div class="float-shape" style="font-size: 2.5rem;">⭐</div>
         <div class="float-shape" style="font-size: 3.5rem;">🎯</div>
     </div>
-    
+
     <div class="container">
         <header class="header">
             <h1 class="main-title">奇绩信号体系</h1>
@@ -278,79 +305,73 @@
                 <p><strong>欢迎来到奇绩的世界！</strong><br>准备好开启你的探索之旅了吗？</p>
             </div>
         </header>
-        
+
         <nav class="nav-grid">
             <a href="introduction.html" class="nav-card">
                 <span class="card-icon">1. </span>
                 <h2 class="card-title">信号体系介绍</h2>
                 <p class="card-desc">了解奇绩信号体系的核心理念和运作方式，开启你的认知升级之旅</p>
             </a>
-            
+
             <a href="tiyanguan.html" class="nav-card">
                 <span class="card-icon">2. </span>
                 <h2 class="card-title">模型体验官</h2>
                 <p class="card-desc">成为AI模型的体验官，与最前沿的人工智能技术亲密接触</p>
             </a>
-            
+
             <a href="discussion.html" class="nav-card">
                 <span class="card-icon">3. </span>
                 <h2 class="card-title">讨论区</h2>
                 <p class="card-desc">与志同道合的伙伴们分享想法，碰撞思维的火花</p>
             </a>
-            
+
             <a href="https://miracleplus.feishu.cn/share/base/form/shrcnWBNun5JXLvwN05e3I9OE8e" class="nav-card">
                 <span class="card-icon">4. </span>
                 <h2 class="card-title">问卷</h2>
                 <p class="card-desc">参与各类有趣的调研问卷，让你的声音被听见</p>
             </a>
         </nav>
-        
+
+        <!-- 二维码部分 -->
+        <div class="qrcode-section">
+            <h3 class="qrcode-title">扫码入群</h3>
+            <img src="images/qrcode.png" alt="二维码" class="qrcode-img">
+        </div>
+
         <footer class="footer">
-            <p>🌟 每一次点击都是新的开始 🌟</p>
+            <p>🌟 长按二维码🌟</p>
         </footer>
     </div>
-    
+
     <script>
         function navigateTo(section) {
-            // 添加点击动画效果
             event.target.closest('.nav-card').style.transform = 'rotate(-2deg) scale(0.95)';
-            
             setTimeout(() => {
-                // 这里可以添加实际的导航逻辑
                 console.log(`导航到: ${section}`);
                 alert(`即将进入${event.target.closest('.nav-card').querySelector('.card-title').textContent}！`);
-                
-                // 恢复卡片状态
                 event.target.closest('.nav-card').style.transform = '';
             }, 200);
         }
-        
-        // 添加一些动态交互效果
+
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.nav-card');
-            
             cards.forEach((card, index) => {
-                // 错开卡片出现的时间
                 card.style.animationDelay = `${index * 0.2}s`;
                 card.style.animation = 'bounceIn 0.8s ease-out forwards';
                 card.style.opacity = '0';
-                
                 setTimeout(() => {
                     card.style.opacity = '1';
                 }, index * 200);
             });
-            
-            // 鼠标移动视差效果
+
             document.addEventListener('mousemove', function(e) {
                 const floatingElements = document.querySelectorAll('.float-shape');
                 const mouseX = e.clientX / window.innerWidth;
                 const mouseY = e.clientY / window.innerHeight;
-                
                 floatingElements.forEach((element, index) => {
                     const speed = (index + 1) * 0.5;
                     const x = (mouseX - 0.5) * speed * 20;
                     const y = (mouseY - 0.5) * speed * 20;
-                    
                     element.style.transform = `translate(${x}px, ${y}px) rotate(${x * 0.1}deg)`;
                 });
             });
