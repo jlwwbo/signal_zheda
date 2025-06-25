@@ -4,9 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>奇绩前沿信号【讨论区】</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-        
+        /* 全局重置与字体 */
+        :root {
+            --primary-blue: #3d83f4;
+            --light-gray: #f9f9f9;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #333333;
+            --text-color: #4a4a4a;
+            --border-color: #f0f0f0;
+            --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            --header-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            --accent-gradient: linear-gradient(135deg, #3d83f4, #5a9bff); /* Slightly varied blue gradient */
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,343 +28,309 @@
         }
         
         body {
-            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #3d83f4 0%, #ffffff 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+            background-color: var(--light-gray);
+            color: var(--text-color);
             min-height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        .comic-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.1;
-            background-image: 
-                radial-gradient(circle at 20% 80%, rgba(255,255,255,0.3) 1px, transparent 1px),
-                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.3) 1px, transparent 1px),
-                radial-gradient(circle at 40% 40%, rgba(255,255,255,0.2) 1px, transparent 1px);
-            background-size: 50px 50px, 80px 80px, 60px 60px;
-            z-index: -1;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            max-width: 960px; /* 适中宽度，更聚焦内容 */
+            margin: 40px auto;
+            padding: 0 20px;
         }
         
+        /* 头部样式 */
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
+            padding: 40px 0;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: var(--header-shadow);
             position: relative;
+            overflow: hidden; /* For subtle background elements */
+        }
+
+        .header::before, .header::after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: rgba(61, 131, 244, 0.05); /* Very subtle blue tint */
+            border-radius: 50%;
+            z-index: 0;
+            filter: blur(50px); /* Soft blur */
+        }
+        
+        .header::before {
+            top: -50px;
+            left: -50px;
+        }
+
+        .header::after {
+            bottom: -50px;
+            right: -50px;
         }
         
         .title {
-            font-size: 3.5rem;
+            font-size: 2.8rem; /* 更内敛但有力的标题 */
             font-weight: 700;
-            color: #fff;
-            text-shadow: 4px 4px 0px #333, 6px 6px 0px rgba(0,0,0,0.3);
+            color: var(--dark-gray);
             margin-bottom: 10px;
-            transform: perspective(500px) rotateX(15deg);
-            animation: bounce 2s ease-in-out infinite alternate;
-        }
-        
-        @keyframes bounce {
-            0% { transform: perspective(500px) rotateX(15deg) translateY(0px); }
-            100% { transform: perspective(500px) rotateX(15deg) translateY(-10px); }
+            letter-spacing: -0.02em; /* 微调字间距 */
+            position: relative;
+            z-index: 1;
         }
         
         .subtitle {
-            font-size: 1.2rem;
-            color: #f0f0f0;
-            margin-bottom: 20px;
-            font-style: italic;
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 30px;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
         }
         
         .header-badges {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
         }
         
         .badge {
-            background: linear-gradient(45deg, #3d83f4, #ffffff);
+            background: var(--accent-gradient);
             color: white;
-            padding: 8px 16px;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transform: rotate(-2deg);
-            transition: all 0.3s ease;
-        }
-        
-        .badge:nth-child(2) {
-            transform: rotate(1deg);
-            background: linear-gradient(45deg, #3d83f4, #ffffff);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 8px rgba(61, 131, 244, 0.2);
+            transition: all 0.2s ease-in-out;
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle inner border for depth */
         }
         
         .badge:hover {
-            transform: rotate(0deg) scale(1.1);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(61, 131, 244, 0.3);
         }
         
+        /* 卡片通用样式 */
         .card {
             background: white;
-            border-radius: 20px;
+            border-radius: 12px;
             padding: 30px;
             margin-bottom: 30px;
-            box-shadow: 
-                0 10px 30px rgba(0,0,0,0.2),
-                inset 0 1px 0 rgba(255,255,255,0.8);
-            border: 3px solid #333;
-            position: relative;
-            transform: rotate(-0.5deg);
-            transition: all 0.3s ease;
-        }
-        
-        .card:nth-child(even) {
-            transform: rotate(0.5deg);
+            box-shadow: var(--card-shadow);
+            transition: all 0.2s ease-in-out;
+            border: 1px solid var(--border-color); /* 增加微妙边框 */
         }
         
         .card:hover {
-            transform: rotate(0deg) translateY(-5px);
-            box-shadow: 
-                0 15px 40px rgba(0,0,0,0.3),
-                inset 0 1px 0 rgba(255,255,255,0.8);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
         }
         
         .card-header {
             display: flex;
             align-items: center;
             margin-bottom: 20px;
-            position: relative;
         }
         
         .emoji-icon {
-            font-size: 2.5rem;
-            margin-right: 15px;
-            animation: wiggle 3s ease-in-out infinite;
-        }
-        
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-5deg); }
-            75% { transform: rotate(5deg); }
+            font-size: 2rem; /* 保持适中大小 */
+            margin-right: 12px;
         }
         
         .card-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #333;
-            text-shadow: 1px 1px 0px #fff;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            letter-spacing: -0.01em;
         }
         
         .description {
             font-size: 1rem;
-            line-height: 1.6;
-            color: #555;
+            line-height: 1.7;
+            color: var(--text-color);
             margin-bottom: 20px;
         }
         
+        /* 列表样式 */
         .features {
             list-style: none;
             margin: 20px 0;
         }
         
         .features li {
-            padding: 10px 0;
-            padding-left: 25px;
+            padding: 8px 0;
+            padding-left: 28px; /* 更多左边距 */
             position: relative;
-            font-size: 1rem;
-            color: #444;
+            font-size: 0.95rem;
+            color: var(--text-color);
         }
         
         .features li::before {
-            content: "⚡";
+            content: "✓"; /* 简洁的勾选符号 */
             position: absolute;
             left: 0;
-            color: #3d83f4;
+            color: var(--primary-blue);
             font-weight: bold;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-        
-        .quote-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: 3px solid #fff;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .quote-card::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(255,255,255,0.1) 10px,
-                rgba(255,255,255,0.1) 20px
-            );
-            animation: slide 20s linear infinite;
-        }
-        
-        @keyframes slide {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        
-        .expert-quote {
-            background: #fff;
-            border-left: 5px solid #3d83f4;
-            padding: 15px 20px;
-            margin: 15px 0;
-            border-radius: 10px;
-            position: relative;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-        
-        .expert-name {
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 5px;
             font-size: 1.1rem;
         }
         
-        .expert-quote-text {
-            color: #555;
-            font-style: italic;
-            line-height: 1.5;
+        /* 引用卡片样式 (AI巨匠 | 远见卓识) */
+        .quote-card {
+            background: white; /* 背景变为白色 */
+            color: var(--text-color); /* 默认文字颜色 */
+            border: 1px solid var(--border-color); /* 添加边框 */
+            box-shadow: var(--card-shadow); /* 使用标准卡片阴影 */
+            padding: 30px; /* 恢复标准卡片内边距 */
         }
         
+        .quote-card .card-title {
+            color: var(--dark-gray); /* 标题颜色改为深灰色 */
+        }
+
+        .quote-card .description,
+        .quote-card p {
+            color: var(--text-color); /* 描述文字颜色 */
+            line-height: 1.7;
+        }
+        
+        .expert-quote {
+            background: var(--light-gray); /* 浅灰色背景，用于区分引用块 */
+            backdrop-filter: none; /* 移除毛玻璃效果 */
+            border-left: 4px solid var(--primary-blue); /* 边框使用主题蓝色 */
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 8px; /* 略小圆角 */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* 更柔和的阴影 */
+        }
+        
+        .expert-name {
+            font-weight: 600;
+            color: #000000; /* 修改为黑色 */
+            margin-bottom: 5px;
+            font-size: 1rem;
+            opacity: 0.95;
+        }
+        
+        .expert-quote-text {
+            color: #000000; /* 修改为黑色 */
+            font-style: italic;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        /* CTA 部分 */
         .cta-section {
-            background: linear-gradient(45deg, #3d83f4, #3d83f4);
+            background: var(--primary-blue); /* 统一主题色 */
             color: white;
             text-align: center;
+            border-radius: 12px; /* 与其他卡片保持一致 */
+            padding: 35px;
+            box-shadow: 0 8px 24px rgba(61, 131, 244, 0.3);
+            border: none;
+            overflow: hidden; /* For subtle background elements */
             position: relative;
-            overflow: hidden;
         }
-        
+
         .cta-section::before {
-            content: "💭";
+            content: '';
             position: absolute;
             top: 20px;
             right: 20px;
-            font-size: 3rem;
-            opacity: 0.3;
-            animation: float 3s ease-in-out infinite;
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            filter: blur(30px);
+            z-index: 0;
         }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+
+        .cta-section .card-title,
+        .cta-section p,
+        .cta-section .features li {
+            color: white;
+            position: relative;
+            z-index: 1; /* Ensure text is above background elements */
         }
         
         .highlight {
-            background: linear-gradient(120deg, #3d83f4 0%, #3d83f4 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 700;
+            font-weight: 600;
+            color: var(--primary-blue); /* 直接使用主题色 */
+            /* 移除背景剪裁，回归简洁 */
+        }
+
+        /* 调整旧的 speech-bubble 区域为标准内容块 */
+        .content-block {
+            background: var(--light-gray); /* 浅灰色背景，与主卡片区分 */
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid var(--medium-gray);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* 柔和内阴影 */
+        }
+
+        .content-block h3 {
+            font-size: 1.2rem;
+            color: var(--dark-gray);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .content-block p {
+                font-size: 0.95rem;
+            color: var(--text-color);
         }
         
-        .speech-bubble {
-            position: relative;
-            background: #fff;
-            border: 2px solid #333;
-            border-radius: 20px;
-            padding: 15px;
-            margin: 10px 0;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-        }
-        
-        .speech-bubble::after {
-            content: "";
-            position: absolute;
-            bottom: -10px;
-            left: 30px;
-            width: 0;
-            height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 10px solid #333;
-        }
-        
-        .speech-bubble::before {
-            content: "";
-            position: absolute;
-            bottom: -8px;
-            left: 31px;
-            width: 0;
-            height: 0;
-            border-left: 9px solid transparent;
-            border-right: 9px solid transparent;
-            border-top: 9px solid #fff;
-        }
-        
+        /* 响应式调整 */
         @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                padding: 0 15px;
+            }
             .title {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
+            }
+            .subtitle {
+                font-size: 1rem;
             }
             .card {
-                padding: 20px;
-                margin-bottom: 20px;
+                padding: 25px;
+                margin-bottom: 25px;
+            }
+            .card-title {
+                font-size: 1.4rem;
             }
             .emoji-icon {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
-        }
-        
-        .floating-elements {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-        
-        .floating-emoji {
-            position: absolute;
-            font-size: 2rem;
-            opacity: 0.1;
-            animation: floatRandom 15s linear infinite;
-        }
-        
-        @keyframes floatRandom {
-            0% { transform: translateY(100vh) rotate(0deg); }
-            100% { transform: translateY(-100px) rotate(360deg); }
+            .badge {
+                font-size: 0.8rem;
+                padding: 7px 16px;
+            }
+            .header {
+                padding: 30px 0;
+                margin-bottom: 40px;
+            }
+            .quote-card, .cta-section {
+                padding: 30px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="comic-bg"></div>
-    
-    <div class="floating-elements">
-        <div class="floating-emoji" style="left: 10%; animation-delay: 0s;">🤖</div>
-        <div class="floating-emoji" style="left: 30%; animation-delay: 3s;">💡</div>
-        <div class="floating-emoji" style="left: 50%; animation-delay: 6s;">🚀</div>
-        <div class="floating-emoji" style="left: 70%; animation-delay: 9s;">⚡</div>
-        <div class="floating-emoji" style="left: 90%; animation-delay: 12s;">🌟</div>
-    </div>
-    
     <div class="container">
         <header class="header">
-            <h1 class="title">奇绩前沿信号【讨论区】</h1>
+            <h1 class="title">奇绩前沿信号<br>【讨论区】</h1>
             <p class="subtitle">AI 思潮汇聚地 · 洞察未来脉络</p>
             <div class="header-badges">
                 <span class="badge">🌐 深度拓展平台</span>
@@ -381,12 +361,12 @@
                 【讨论区】致力于成为你获取AI前沿洞见、参与行业思辨、提升专业理解的一站式信息枢纽。
             </p>
             
-            <div class="speech-bubble">
+            <div class="content-block">
                 <h3>📡 信息发布窗口</h3>
                 <p>及时更新并整理来自全球的AI最新趋势、技术突破及未来方向的深度分析。我们不是简单的信息搬运工，而是智慧的筛选者和整理者。</p>
             </div>
             
-            <div class="speech-bubble">
+            <div class="content-block">
                 <h3>🎓 业界大佬观点</h3>
                 <p>定期呈现行业领军人物对AI热点、产品迭代、未来趋势的权威判断。让你直接获取最有价值的第一手见解。</p>
             </div>
@@ -395,12 +375,12 @@
         <div class="card quote-card">
             <div class="card-header">
                 <span class="emoji-icon">💡</span>
-                <h2 class="card-title" style="color: white;">AI巨匠 | 远见卓识</h2>
+                <h2 class="card-title">AI巨匠 | 远见卓识</h2>
             </div>
-            <p style="color: rgba(255,255,255,0.9); margin-bottom: 20px;">
+            <p class="description">
                 —— 直击大佬智慧，把握AI脉搏
             </p>
-            <p style="color: rgba(255,255,255,0.8); margin-bottom: 25px;">
+            <p class="description">
                 本版块精选AI领域最具影响力的思想领袖、学术大拿的最新观点和预判，助你洞察AI发展的深层逻辑和未来趋势。
             </p>
             
@@ -458,21 +438,21 @@
         <div class="card cta-section">
             <div class="card-header">
                 <span class="emoji-icon">✨</span>
-                <h2 class="card-title" style="color: white;">参与互动 | 你的声音</h2>
+                <h2 class="card-title">参与互动 | 你的声音</h2>
             </div>
-            <p style="color: rgba(255,255,255,0.9); margin-bottom: 20px;">
+            <p class="description">
                 —— 不做旁观者，成为未来塑造者
             </p>
-            <p style="color: rgba(255,255,255,0.8); margin-bottom: 25px;">
+            <p class="description">
                 在奇绩前沿信号【讨论区】，你的观点同样重要。我们欢迎并鼓励你积极参与话题讨论，分享你的真知灼见。
             </p>
-            <p style="color: rgba(255,255,255,0.8); margin-bottom: 25px;">
+            <p class="description">
                 我们致力于为你提供一个高质量的学习和思考场域，帮助你不仅能了解"是什么"，更能理解"为什么"以及"接下来会怎样"。
             </p>
             
-            <ul class="features" style="color: rgba(255,255,255,0.9);">
+            <ul class="features">
                 <li><strong>提升认知维度：</strong> 通过系统性的内容梳理和深入的观点对比，把握AI深层逻辑与发展方向</li>
-                <li><strong>汲取实践养分：</strong> 大佬们的经验和预判，为你的学习、研究和职业发展提供宝贵参考</li>
+                <li><strong>汲取实践养分：：</strong> 大佬们的经验和预判，为你的学习、研究和职业发展提供宝贵参考</li>
                 <li><strong>扩展专业人脉：</strong> 通过对共同话题的关注和理解，与行业精英思想建立连接</li>
             </ul>
         </div>
