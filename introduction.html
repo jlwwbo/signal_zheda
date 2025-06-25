@@ -3,10 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>奇绩AI信号体系 - 漫画风</title>
+    <title>奇绩AI信号体系</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
-        
+        /* 全局变量和重置 */
+        :root {
+            --primary-blue: #3d83f4;
+            --light-gray: #f9f9f9;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #333333;
+            --text-color: #4a4a4a;
+            --border-color: #f0f0f0;
+            --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            --header-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            --accent-gradient: linear-gradient(135deg, #3d83f4, #5a9bff);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,168 +28,200 @@
         }
         
         body {
-            font-family: 'Noto Sans SC', sans-serif;
-            background: linear-gradient(135deg, #3d83f4 0%, #ffffff 100%);
+            font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+            background-color: var(--light-gray);
+            color: var(--text-color);
             min-height: 100vh;
-            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
-        .comic-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+        .container {
+            max-width: 960px; /* 适中宽度，聚焦内容 */
+            margin: 40px auto;
+            padding: 0 20px;
         }
         
+        /* 头部样式 */
         .header {
             text-align: center;
-            margin-bottom: 40px;
-            position: relative;
-        }
-        
-        .title {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: #fff;
-            text-shadow: 4px 4px 0px #333, 6px 6px 0px rgba(0,0,0,0.3);
-            transform: rotate(-2deg);
-            margin-bottom: 20px;
-            position: relative;
-        }
-        
-        .title::before {
-            content: '💫';
-            position: absolute;
-            left: -60px;
-            top: -10px;
-            font-size: 2rem;
-            animation: bounce 2s infinite;
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            color: #f0f0f0;
-            background: rgba(255,255,255,0.2);
-            padding: 10px 20px;
-            border-radius: 25px;
-            display: inline-block;
-            backdrop-filter: blur(10px);
-        }
-        
-        .comic-panel {
-            background: #fff;
-            border: 4px solid #333;
-            border-radius: 20px;
-            margin: 30px 0;
-            padding: 30px;
-            box-shadow: 8px 8px 0px #333, 12px 12px 0px rgba(0,0,0,0.3);
+            margin-bottom: 60px;
+            padding: 40px 0;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: var(--header-shadow);
             position: relative;
             overflow: hidden;
         }
-        
-        .comic-panel::before {
+
+        .header::before, .header::after { /* subtle background elements */
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 8px;
-            background: repeating-linear-gradient(
-                45deg,
-                #3d83f4,
-                #3d83f4 10px,
-                #ffffff 10px,
-                #ffffff 20px
-            );
+            width: 150px;
+            height: 150px;
+            background: rgba(61, 131, 244, 0.05);
+            border-radius: 50%;
+            z-index: 0;
+            filter: blur(50px);
         }
         
-        .panel-title {
-            font-size: 2rem;
+        .header::before {
+            top: -50px;
+            left: -50px;
+        }
+
+        .header::after {
+            bottom: -50px;
+            right: -50px;
+        }
+
+        .main-title {
+            font-size: 2.8rem; /* 更内敛但有力的标题 */
             font-weight: 700;
-            color: #333;
+            color: var(--dark-gray);
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 30px;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 新增的 alert-box 样式，取代 speech-bubble */
+        .alert-box {
+            background-color: #e6f0ff; /* 柔和的蓝色背景 */
+            border: 1px solid var(--primary-blue);
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 20px auto 0; /* 调整 margin */
+            max-width: 380px; /* 适中宽度 */
+            text-align: center;
+            color: var(--dark-gray);
+            font-size: 0.95rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 1;
+        }
+        .alert-box strong {
+            color: var(--primary-blue);
+        }
+        
+        /* 核心内容面板 */
+        .panel-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.2s ease-in-out;
+            border: 1px solid var(--border-color);
+        }
+        
+        .panel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .panel-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--dark-gray);
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 15px;
+            letter-spacing: -0.02em;
         }
         
         .emoji-big {
-            font-size: 2.5rem;
-            animation: wiggle 3s ease-in-out infinite;
+            font-size: 2.2rem; /* 调整图标大小 */
+            animation: none; /* 移除动画 */
         }
         
         .content-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
             margin-top: 20px;
         }
         
         .info-card {
-            background: linear-gradient(135deg, #3d83f4 0%, #3d83f4 50%, #3d83f4 100%);
-            border: 3px solid #333;
-            border-radius: 15px;
+            background: white; /* 统一白色背景 */
+            border: 1px solid var(--border-color); /* 柔和边框 */
+            border-radius: 10px; /* 略小圆角 */
             padding: 20px;
             position: relative;
-            transform: rotate(1deg);
-            transition: all 0.3s ease;
+            transform: none; /* 移除旋转 */
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03); /* 柔和阴影 */
         }
         
-        .info-card:nth-child(even) {
-            transform: rotate(-1deg);
+        .info-card:nth-child(even), .info-card:nth-child(odd) {
+            transform: none; /* 移除交替旋转 */
         }
         
         .info-card:hover {
-            transform: rotate(0deg) scale(1.05);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transform: translateY(-3px); /* 向上轻微浮动 */
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
         }
         
         .card-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 10px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
         .card-content {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             line-height: 1.6;
-            color: #444;
+            color: var(--text-color);
         }
         
         .timeline {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            margin: 30px 0;
+            gap: 15px;
+            margin: 25px 0;
         }
         
         .timeline-item {
             display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 20px;
-            background: #fff;
-            border: 3px solid #333;
-            border-radius: 15px;
+            align-items: flex-start; /* 顶部对齐 */
+            gap: 15px;
+            padding: 18px 20px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
             position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
         }
         
         .timeline-number {
-            background: #3d83f4;
+            background: var(--primary-blue);
             color: white;
-            width: 50px;
-            height: 50px;
+            width: 35px; /* 略小尺寸 */
+            height: 35px;
             border-radius: 50%;
-            border: 3px solid #333;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 900;
-            font-size: 1.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
             flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(61, 131, 244, 0.2);
+            border: none; /* 移除黑色边框 */
         }
         
         .timeline-content {
@@ -183,79 +229,73 @@
         }
         
         .timeline-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 8px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: 5px;
         }
         
         .timeline-desc {
-            color: #666;
+            color: var(--text-color);
             line-height: 1.5;
+            font-size: 0.9rem;
         }
         
         .feature-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
             margin: 20px 0;
         }
         
         .feature-item {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            border: 2px solid #333;
-            border-radius: 12px;
+            background: #f0f6ff; /* 柔和的浅蓝色背景 */
+            border: 1px solid #d9e6f6; /* 柔和边框 */
+            border-radius: 10px;
             padding: 15px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            color: var(--dark-gray);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
         }
         
         .feature-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.07);
         }
         
-        .speech-bubble {
-            background: #3d83f4;
-            border: 3px solid #333;
-            border-radius: 20px;
-            padding: 20px;
+        /* 调整 speech-bubble 为更简洁的 quote-box */
+        .quote-box {
+            background: var(--primary-blue);
+            border-radius: 12px;
+            padding: 25px;
             position: relative;
             margin: 20px 0;
-        }
-        
-        .speech-bubble::before {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 30px;
-            width: 0;
-            height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-top: 15px solid #333;
-        }
-        
-        .speech-bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 33px;
-            width: 0;
-            height: 0;
-            border-left: 12px solid transparent;
-            border-right: 12px solid transparent;
-            border-top: 12px solid #3d83f4;
-        }
-        
-        .highlight-box {
-            background: linear-gradient(135deg, #667eea 0%, #ffffff 100%);
             color: white;
-            padding: 25px;
-            border-radius: 20px;
-            border: 4px solid #333;
-            margin: 20px 0;
+            font-size: 1rem;
+            line-height: 1.6;
+            box-shadow: 0 4px 12px rgba(61, 131, 244, 0.2);
+            border: none; /* 移除黑色边框 */
+        }
+        .quote-box::before, .quote-box::after { /* 移除原有的箭头 */
+            content: none;
+        }
+        .quote-box strong {
+            color: white; /* 确保文字颜色为白色 */
+        }
+
+        .highlight-box {
+            background: var(--accent-gradient); /* 使用渐变 */
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            border: none; /* 移除边框 */
+            margin: 25px 0;
             text-align: center;
+            box-shadow: 0 8px 24px rgba(61, 131, 244, 0.3);
+        }
+        .highlight-box h2, .highlight-box p {
+            color: white;
         }
         
         .tabs {
@@ -263,22 +303,26 @@
             gap: 10px;
             margin-bottom: 20px;
             flex-wrap: wrap;
+            justify-content: center; /* 居中显示 */
         }
         
         .tab {
             background: #f0f0f0;
-            border: 2px solid #333;
-            border-radius: 25px;
-            padding: 10px 20px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 20px; /* 略小圆角 */
+            padding: 8px 18px; /* 调整内边距 */
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text-color);
         }
         
         .tab.active {
-            background: #3d83f4;
+            background: var(--primary-blue);
             color: white;
-            transform: rotate(-1deg);
+            transform: none; /* 移除旋转 */
+            box-shadow: 0 2px 8px rgba(61, 131, 244, 0.2);
         }
         
         .tab-content {
@@ -287,94 +331,105 @@
         
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.5s ease;
+            animation: fadeIn 0.4s ease-out forwards; /* 调整动画速度 */
         }
         
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
+        /* 移除所有动画 */
+        @keyframes none {
+            from { opacity: 1; }
+            to { opacity: 1; }
         }
-        
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(5deg); }
-            75% { transform: rotate(-5deg); }
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        .header .title::before, .emoji-big, .info-card, .tab-content.active, .interactive-btn {
+            animation: none !important;
         }
         
         .interactive-btn {
-            background: linear-gradient(135deg, #3d83f4, #3d83f4);
+            background: var(--primary-blue); /* 统一主题色 */
             color: white;
-            border: 3px solid #333;
-            border-radius: 25px;
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            font-weight: 700;
+            border: none; /* 移除边框 */
+            border-radius: 8px; /* 统一圆角 */
+            padding: 12px 25px; /* 调整内边距 */
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             display: inline-block;
-            margin: 10px 5px;
+            margin: 10px 8px;
             text-decoration: none;
+            box-shadow: 0 4px 12px rgba(61, 131, 244, 0.2);
         }
         
         .interactive-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.4);
+            box-shadow: 0 6px 16px rgba(61, 131, 244, 0.3);
         }
         
         .progress-bar {
-            background: #f0f0f0;
-            border: 2px solid #333;
-            border-radius: 10px;
-            height: 20px;
-            margin: 10px 0;
+            background: var(--medium-gray);
+            border: none; /* 移除边框 */
+            border-radius: 8px; /* 统一圆角 */
+            height: 16px; /* 略小高度 */
+            margin: 15px 0 0; /* 调整间距 */
             overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* 柔和内阴影 */
         }
         
         .progress-fill {
-            background: linear-gradient(90deg, #3d83f4, #3d83f4);
+            background: var(--primary-blue); /* 统一主题色 */
             height: 100%;
-            transition: width 2s ease;
+            border-radius: 8px; /* 统一圆角 */
+            transition: width 0.6s ease-out; /* 更快的动画 */
         }
         
         @media (max-width: 768px) {
-            .title {
-                font-size: 2.5rem;
+            .main-title {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .panel-title {
+                font-size: 1.6rem;
             }
             
             .content-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
             }
             
             .timeline-item {
                 flex-direction: column;
-                text-align: center;
+                text-align: left; /* 保持文字左对齐 */
+                align-items: flex-start; /* 保持图标左对齐 */
+            }
+            .timeline-number {
+                margin-bottom: 10px; /* 垂直排列时增加间距 */
+            }
+
+            .tabs {
+                justify-content: flex-start; /* 小屏幕左对齐 */
             }
         }
     </style>
 </head>
 <body>
-    <div class="comic-container">
-        <div class="header">
-            <h1 class="title">🚀 AI信号追踪系统</h1>
-            <p class="subtitle">像漫画英雄一样追踪AI世界的每一个信号！</p>
-        </div>
+    <div class="container">
+        <header class="header">
+            <h1 class="main-title">🚀 AI信号追踪系统</h1>
+            <p class="subtitle">像苹果一样，极简而强大地追踪AI世界的每一个信号！</p>
+            <div class="alert-box">
+                <p><strong>简单来说：</strong> 就像有一个超级雷达，24小时监测全球AI领域的最新动态，包括顶尖科学家在研究什么、最新论文发布了什么黑科技、哪些公司又有新突破！</p>
+            </div>
+        </header>
 
-        <!-- 核心概念面板 -->
-        <div class="comic-panel">
+        <div class="panel-card">
             <h2 class="panel-title">
                 <span class="emoji-big">🎯</span>
                 什么是AI信号体系？
             </h2>
-            <div class="speech-bubble">
-                <strong>简单来说：</strong> 就像有一个超级雷达，24小时监测全球AI领域的最新动态，包括顶尖科学家在研究什么、最新论文发布了什么黑科技、哪些公司又有新突破！
-            </div>
-            
             <div class="content-grid">
                 <div class="info-card">
                     <div class="card-title">🔍 信息变化超快</div>
@@ -399,17 +454,16 @@
             </div>
         </div>
 
-        <!-- AI发展三部曲 -->
-        <div class="comic-panel">
+        <div class="panel-card">
             <h2 class="panel-title">
                 <span class="emoji-big">🎬</span>
                 AI发展三部曲
             </h2>
             
             <div class="tabs">
-                <div class="tab active" onclick="showTab('act1')">第一幕：大数据时代</div>
-                <div class="tab" onclick="showTab('act2')">第二幕：强化学习</div>
-                <div class="tab" onclick="showTab('act3')">第三幕：真实场景</div>
+                <div class="tab active" onclick="showTab('act1', 100)">第一幕：大数据时代</div>
+                <div class="tab" onclick="showTab('act2', 80)">第二幕：强化学习</div>
+                <div class="tab" onclick="showTab('act3', 30)">第三幕：真实场景</div>
             </div>
             
             <div id="act1" class="tab-content active">
@@ -426,7 +480,7 @@
                     </div>
                 </div>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 100%"></div>
+                    <div class="progress-fill" style="width: 100%;"></div>
                 </div>
             </div>
             
@@ -444,7 +498,7 @@
                     </div>
                 </div>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 80%"></div>
+                    <div class="progress-fill" style="width: 80%;"></div>
                 </div>
             </div>
             
@@ -462,29 +516,28 @@
                     </div>
                 </div>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 30%"></div>
+                    <div class="progress-fill" style="width: 30%;"></div>
                 </div>
             </div>
         </div>
 
-        <!-- 四大智能领域 -->
-        <div class="comic-panel">
+        <div class="panel-card">
             <h2 class="panel-title">
                 <span class="emoji-big">🌟</span>
                 AI的四大超能力
             </h2>
             
             <div class="content-grid">
-                <div class="info-card" style="background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%); ">
-                    <div class="card-title" style="color: rgb(8, 8, 8);">🧠 认知智能</div>
-                    <div class="card-content" style="color: #0e0d0d;">
+                <div class="info-card">
+                    <div class="card-title">🧠 认知智能</div>
+                    <div class="card-content">
                         <strong>超能力：</strong>像天才学霸一样思考<br>
                         <strong>应用：</strong>AI写代码、做研究、解数学题<br>
                         <strong>水平：</strong>已达到PhD水平！
                     </div>
                 </div>
                 
-                <div class="info-card" style="background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);">
+                <div class="info-card">
                     <div class="card-title">🎯 场景智能</div>
                     <div class="card-content">
                         <strong>超能力：</strong>在各种场景中游刃有余<br>
@@ -493,7 +546,7 @@
                     </div>
                 </div>
                 
-                <div class="info-card" style="background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);">
+                <div class="info-card">
                     <div class="card-title">🤖 具身智能</div>
                     <div class="card-content">
                         <strong>超能力：</strong>拥有"身体"与物理世界交互<br>
@@ -502,7 +555,7 @@
                     </div>
                 </div>
                 
-                <div class="info-card" style="background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);">
+                <div class="info-card">
                     <div class="card-title">🔬 科学智能</div>
                     <div class="card-content">
                         <strong>超能力：</strong>加速科学发现<br>
@@ -513,14 +566,13 @@
             </div>
         </div>
 
-        <!-- 信号追踪系统 -->
-        <div class="comic-panel">
+        <div class="panel-card">
             <h2 class="panel-title">
                 <span class="emoji-big">📡</span>
                 信号追踪系统是如何工作的？
             </h2>
             
-            <div class="highlight-box">
+            <div class="quote-box">
                 <h3>🎯 核心任务：找到最有价值的信息</h3>
                 <p>就像漫画里的情报网络，我们需要：</p>
             </div>
@@ -553,14 +605,13 @@
             </div>
         </div>
 
-        <!-- 顶尖人才网络 -->
-        <div class="comic-panel">
+        <div class="panel-card">
             <h2 class="panel-title">
                 <span class="emoji-big">🌐</span>
                 全球AI顶尖人才网络
             </h2>
             
-            <div class="speech-bubble">
+            <div class="quote-box">
                 <strong>为什么要追踪这些大佬？</strong><br>
                 因为他们就是AI世界的"漫威英雄"！他们的每一个想法都可能改变世界！
             </div>
@@ -569,27 +620,26 @@
                 <div class="info-card">
                     <div class="card-title">🏢 顶级公司人才</div>
                     <div class="card-content">
-                        <strong>OpenAI：</strong>Yang Song, Jason Wei等<br>
-                        <strong>Google：</strong>Miaosen Wang, Andrew Dai等<br>
-                        <strong>Anthropic：</strong>Dario Amodei等<br>
-                        <strong>Meta, xAI, Mistral等</strong>
+                        来自 **OpenAI** 的研究员<br>
+                        来自 **Google** 的研究员<br>
+                        来自 **Anthropic** 的研究员<br>
+                        来自 **Meta, xAI, Mistral** 等公司的专家
                     </div>
                 </div>
                 
                 <div class="info-card">
                     <div class="card-title">🎓 顶尖高校研究者</div>
                     <div class="card-content">
-                        <strong>斯坦福：</strong>Ying Sheng, Zihao Zhao等<br>
-                        <strong>伯克利：</strong>Yutong Bai, Zhanghao Wu等<br>
-                        <strong>CMU：</strong>Beidi Chen, Xinyu Yang等<br>
-                        <strong>MIT, NYU, 普林斯顿等</strong>
+                        来自 **斯坦福大学** 的研究者<br>
+                        来自 **伯克利大学** 的研究者<br>
+                        来自 **CMU** 的研究者<br>
+                        来自 **MIT, NYU, 普林斯顿** 等高校的学者
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 产品应用 -->
-        <div class="comic-panel">
+        <div class="panel-card">
             <h2 class="panel-title">
                 <span class="emoji-big">💡</span>
                 这个系统能为大学生做什么？
@@ -626,8 +676,7 @@
             </div>
         </div>
 
-        <!-- 行动号召 -->
-        <div class="comic-panel">
+        <div class="panel-card">
             <div class="highlight-box">
                 <h2>🎉 准备好成为AI时代的先锋了吗？</h2>
                 <p>加入我们的信号追踪系统，像超级英雄一样掌握AI世界的脉搏！</p>
@@ -639,7 +688,7 @@
     </div>
 
     <script>
-        function showTab(tabId) {
+        function showTab(tabId, progress) {
             // 隐藏所有tab内容
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
@@ -651,40 +700,25 @@
             });
             
             // 显示选中的tab内容
-            document.getElementById(tabId).classList.add('active');
+            const selectedTabContent = document.getElementById(tabId);
+            selectedTabContent.classList.add('active');
+            
+            // 更新进度条
+            selectedTabContent.querySelector('.progress-fill').style.width = progress + '%';
             
             // 激活对应的tab
             event.target.classList.add('active');
         }
         
-        function showDemo() {
-            alert('🎉 Demo功能开发中，敬请期待！\n\n即将为你展示：\n✅ 实时论文推荐\n✅ AI人才追踪\n✅ 技术趋势分析\n✅ 个性化信息流');
-        }
-        
-        function showMore() {
-            alert('📚 想了解更多？\n\n👨‍💻 关注我们的技术博客\n🎓 加入学习社区\n📧 订阅每日AI前沿资讯\n💬 参与线上workshop讨论');
-        }
-        
-        // 添加一些动态效果
+        // 初始化第一个tab的进度条
         document.addEventListener('DOMContentLoaded', function() {
-            // 随机旋转一些卡片
-            const cards = document.querySelectorAll('.info-card');
-            cards.forEach((card, index) => {
-                const rotation = (Math.random() - 0.5) * 4; // -2到2度的随机旋转
-                card.style.transform = `rotate(${rotation}deg)`;
-            });
-            
-            // 滚动动画
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.animation = 'fadeIn 0.6s ease forwards';
-                    }
-                });
-            });
-            
-            document.querySelectorAll('.comic-panel').forEach(panel => {
-                observer.observe(panel);
+            document.getElementById('act1').querySelector('.progress-fill').style.width = '100%';
+
+            // 移除所有旧的动画相关JS
+            // 确保页面加载时所有面板都是可见的
+            document.querySelectorAll('.panel-card').forEach(panel => {
+                panel.style.opacity = '1';
+                panel.style.transform = 'translateY(0)';
             });
         });
     </script>
